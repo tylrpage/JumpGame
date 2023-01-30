@@ -12,6 +12,8 @@ public class Jump : MonoBehaviour
     
     private bool _charging;
     private float _chargeAmount;
+
+    public float ChargeAmountNorm => _chargeAmount / maxChargeAmount;
     
     private void Update()
     {
