@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,16 @@ public class Jump : MonoBehaviour
     private bool _charging;
     private float _chargeAmount;
     private bool _isJumping;
+    private LilyManager _lilyManager;
 
     public float ChargeAmountNorm => _chargeAmount / maxChargeAmount;
-    
+
+    private void Awake()
+    {
+        _lilyManager = ServiceLocator.Instance.GetService<LilyManager>();
+        _lilyManager.CreateNextLily();
+    }
+
     private void Update()
     {
         if (_charging)
