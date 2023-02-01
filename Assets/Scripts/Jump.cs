@@ -12,6 +12,7 @@ public class Jump : MonoBehaviour
     
     private bool _charging;
     private float _chargeAmount;
+    private bool _isJumping;
 
     public float ChargeAmountNorm => _chargeAmount / maxChargeAmount;
     
@@ -23,7 +24,7 @@ public class Jump : MonoBehaviour
             _chargeAmount = Mathf.Min(maxChargeAmount, _chargeAmount);
         }
         
-        if (Input.GetKeyDown(KeyCode.Space) && !_charging)
+        if (Input.GetKeyDown(KeyCode.Space) && !_charging && !_isJumping)
         {
             _charging = true;
         }
@@ -43,12 +44,15 @@ public class Jump : MonoBehaviour
 
     private IEnumerator JumpRoutine(Vector3 start, Vector3 end)
     {
+        _isJumping = true;
         Vector3 middle = Vector3.Lerp(start, end, jumpApexLocation) + Vector3.up * jumpHeight;
         for (float t = 0; t < 1; t += Time.deltaTime / jumpDuration)
         {
             transform.position = EvaluateBezier(start, middle, end, t);
             yield return null;
         }
+
+        _isJumping = false;
     }
 
     private Vector3 EvaluateBezier(Vector3 a, Vector3 b, Vector3 c, float t)
