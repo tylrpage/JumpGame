@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420034}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -455,9 +456,22 @@ MonoBehaviour:
   lilyPrefab: {fileID: 6535690067881387169, guid: 279ad36a6645c1e468cb3aef9c3a37ab, type: 3}
   lilyPadDistance:
     Min: 5
-    Max: 10
+    Max: 13
   frog: {fileID: 1080977361}
   firstLily: {fileID: 1603739793}
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d816178f6bd366b468b97d4ca6afafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frog: {fileID: 1080977359}
 --- !u!1 &902169150
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,6 +668,7 @@ MonoBehaviour:
   jumpDuration: 0.75
   maxChargeAmount: 15
   jumpApexLocation: 0.8
+  allowedJumpError: 1.5
 --- !u!4 &1080977361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2503704861327530446, guid: cc628805daf9c5e4e9fb2c24119ec8b5, type: 3}
@@ -1196,11 +1211,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6535690067881387169, guid: 279ad36a6645c1e468cb3aef9c3a37ab, type: 3}
       propertyPath: m_Name
-      value: Lily
+      value: FirstLily
       objectReference: {fileID: 0}
     - target: {fileID: 6544525387646028558, guid: 279ad36a6645c1e468cb3aef9c3a37ab, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544525387646028558, guid: 279ad36a6645c1e468cb3aef9c3a37ab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544525387646028558, guid: 279ad36a6645c1e468cb3aef9c3a37ab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6544525387646028558, guid: 279ad36a6645c1e468cb3aef9c3a37ab, type: 3}
       propertyPath: m_LocalPosition.x

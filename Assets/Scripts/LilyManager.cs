@@ -15,6 +15,8 @@ public class LilyManager : MonoBehaviour, IService
     [SerializeField] private MinMaxRange lilyPadDistance;
     [SerializeField] private Transform frog;
     [SerializeField] private GameObject firstLily;
+    
+    public float NextLilyDistance { get; private set; }
 
     private GameObject _previousLily;
 
@@ -26,9 +28,11 @@ public class LilyManager : MonoBehaviour, IService
     public void CreateNextLily()
     {
         Vector3 direction = frog.forward;
+        float randomLilyDistance = Random.Range(lilyPadDistance.Min, lilyPadDistance.Max);
         Vector3 newLilyPosition =
-            _previousLily.transform.position + direction * Random.Range(lilyPadDistance.Min, lilyPadDistance.Max);
+            _previousLily.transform.position + direction * randomLilyDistance;
         _previousLily = Instantiate(lilyPrefab, newLilyPosition, Quaternion.identity);
+        NextLilyDistance = randomLilyDistance;
         //todo: random lily size
     }
 }

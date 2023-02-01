@@ -10,11 +10,14 @@ public class Jump : MonoBehaviour
     [SerializeField] private float jumpDuration;
     [SerializeField] private float maxChargeAmount;
     [SerializeField] [Range(0,1)] private float jumpApexLocation;
+    [SerializeField] private float allowedJumpError;
     
     private bool _charging;
     private float _chargeAmount;
     private bool _isJumping;
     private LilyManager _lilyManager;
+    private CameraManager _cameraManager;
+    private float _previousJumpError; // positive means we jumped too far
 
     public float ChargeAmountNorm => _chargeAmount / maxChargeAmount;
 
@@ -22,6 +25,8 @@ public class Jump : MonoBehaviour
     {
         _lilyManager = ServiceLocator.Instance.GetService<LilyManager>();
         _lilyManager.CreateNextLily();
+        
+        _cameraManager = ServiceLocator.Instance.GetService<CameraManager>();
     }
 
     private void Update()
@@ -43,14 +48,17 @@ public class Jump : MonoBehaviour
             // jump
             Vector3 start = transform.position;
             Vector3 end = transform.position + transform.forward * _chargeAmount;
-            StartCoroutine(JumpRoutine(start, end));
-            
+            // Factor our error from jumping onto our current lily when calculating how far we are off jumping to the next
+            _previousJumpError = _previousJumpError + _chargeAmount - _lilyManager.NextLilyDistance;
+            bool madeJump = Mathf.Abs(_previousJumpError) < allowedJumpError;
+            StartCoroutine(JumpRoutine(start, end, madeJump));
+
             // reset for next jump
             _chargeAmount = 0;
         }
     }
 
-    private IEnumerator JumpRoutine(Vector3 start, Vector3 end)
+    private IEnumerator JumpRoutine(Vector3 start, Vector3 end, bool madeJump)
     {
         _isJumping = true;
         Vector3 middle = Vector3.Lerp(start, end, jumpApexLocation) + Vector3.up * jumpHeight;
@@ -61,6 +69,12 @@ public class Jump : MonoBehaviour
         }
 
         _isJumping = false;
+        
+        if (madeJump)
+        {
+            _lilyManager.CreateNextLily();
+            _cameraManager.ReFocus();
+        }
     }
 
     private Vector3 EvaluateBezier(Vector3 a, Vector3 b, Vector3 c, float t)
