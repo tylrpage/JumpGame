@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Jump : MonoBehaviour
 {
@@ -74,6 +75,11 @@ public class Jump : MonoBehaviour
         {
             _lilyManager.CreateNextLily();
             _cameraManager.ReFocus();
+        }
+        else
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
         }
     }
 
